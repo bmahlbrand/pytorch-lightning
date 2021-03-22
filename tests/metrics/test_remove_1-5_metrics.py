@@ -31,7 +31,7 @@ from pytorch_lightning.metrics import (
     PrecisionRecallCurve,
     Recall,
     ROC,
-    StatScores,
+    StatScores, PSNR,
 )
 from pytorch_lightning.metrics.functional import (
     auc,
@@ -47,7 +47,7 @@ from pytorch_lightning.metrics.functional import (
     precision_recall_curve,
     recall,
     roc,
-    stat_scores,
+    stat_scores, psnr,
 )
 from pytorch_lightning.metrics.functional.accuracy import accuracy
 from pytorch_lightning.metrics.utils import get_num_classes, select_topk, to_categorical, to_onehot
@@ -237,3 +237,16 @@ def test_v1_5_metric_detect():
     iou.warned = False
     with pytest.deprecated_call(match='It will be removed in v1.5.0'):
         assert torch.allclose(iou(pred, target), torch.tensor(0.9660), atol=1e-4)
+
+
+def test_v1_5_metric_regression():
+    PSNR.__init__.warned = False
+    with pytest.deprecated_call(match='It will be removed in v1.5.0'):
+        PSNR(num_classes=1)
+
+    preds = torch.tensor([[0.0, 1.0], [2.0, 3.0]])
+    target = torch.tensor([[3.0, 2.0], [1.0, 0.0]])
+    psnr.warned = False
+    with pytest.deprecated_call(match='It will be removed in v1.5.0'):
+        res = psnr(preds, target)
+        assert torch.allclose(res, torch.tensor(2.5527), atol=1e-4)
