@@ -33,7 +33,8 @@ from pytorch_lightning.metrics import (
     R2Score,
     Recall,
     ROC,
-    StatScores, SSIM,
+    SSIM,
+    StatScores,
 )
 from pytorch_lightning.metrics.functional import (
     auc,
@@ -51,7 +52,8 @@ from pytorch_lightning.metrics.functional import (
     r2score,
     recall,
     roc,
-    stat_scores, ssim,
+    ssim,
+    stat_scores,
 )
 from pytorch_lightning.metrics.functional.accuracy import accuracy
 from pytorch_lightning.metrics.utils import get_num_classes, select_topk, to_categorical, to_onehot
