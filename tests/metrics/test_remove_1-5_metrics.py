@@ -29,9 +29,11 @@ from pytorch_lightning.metrics import (
     MetricCollection,
     Precision,
     PrecisionRecallCurve,
+    PSNR,
+    R2Score,
     Recall,
     ROC,
-    StatScores, PSNR,
+    StatScores,
 )
 from pytorch_lightning.metrics.functional import (
     auc,
@@ -45,9 +47,11 @@ from pytorch_lightning.metrics.functional import (
     precision,
     precision_recall,
     precision_recall_curve,
+    psnr,
+    r2score,
     recall,
     roc,
-    stat_scores, psnr,
+    stat_scores,
 )
 from pytorch_lightning.metrics.functional.accuracy import accuracy
 from pytorch_lightning.metrics.utils import get_num_classes, select_topk, to_categorical, to_onehot
@@ -242,7 +246,11 @@ def test_v1_5_metric_detect():
 def test_v1_5_metric_regression():
     PSNR.__init__.warned = False
     with pytest.deprecated_call(match='It will be removed in v1.5.0'):
-        PSNR(num_classes=1)
+        PSNR()
+
+    R2Score.__init__.warned = False
+    with pytest.deprecated_call(match='It will be removed in v1.5.0'):
+        R2Score()
 
     preds = torch.tensor([[0.0, 1.0], [2.0, 3.0]])
     target = torch.tensor([[3.0, 2.0], [1.0, 0.0]])
@@ -250,3 +258,10 @@ def test_v1_5_metric_regression():
     with pytest.deprecated_call(match='It will be removed in v1.5.0'):
         res = psnr(preds, target)
         assert torch.allclose(res, torch.tensor(2.5527), atol=1e-4)
+
+    target = torch.tensor([3, -0.5, 2, 7])
+    preds = torch.tensor([2.5, 0.0, 2, 8])
+    r2score.warned = False
+    with pytest.deprecated_call(match='It will be removed in v1.5.0'):
+        res = r2score(preds, target)
+        assert torch.allclose(res, torch.tensor(0.9486), atol=1e-4)
