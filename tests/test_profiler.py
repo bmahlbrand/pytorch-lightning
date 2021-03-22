@@ -22,7 +22,7 @@ import pytest
 import torch
 
 from pytorch_lightning import Trainer
-from pytorch_lightning.profiler import AdvancedProfiler, SimpleProfiler, PyTorchProfiler
+from pytorch_lightning.profiler import AdvancedProfiler, PyTorchProfiler, SimpleProfiler
 from tests.helpers import BoringModel
 from tests.helpers.runif import RunIf
 
